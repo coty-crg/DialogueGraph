@@ -7,12 +7,13 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+using LocalizationExtension;
 #pragma warning disable 618
 
 namespace DialogueGraph {
+
     public class LineDataNpc {
-        public string Line;
+        public LocalizationReference LineRef;
         public string PortGuidA;
         public string PortGuidB;
         public string PortGuidC;
@@ -77,12 +78,13 @@ namespace DialogueGraph {
             if (create) {
                 Owner.EditorView.DlogObject.RegisterCompleteObjectUndo("Created Dialogue Line");
                 index = Lines.Count;
-                Lines.Add(new LineDataNpc {Line = ""});
+                Lines.Add(new LineDataNpc {LineRef = ""});
             }
 
-            var message = UIElementsFactory.TextField("conversation-item", "Line", new[] {"message"}, null, null, true);
+            // var message = UIElementsFactory.TextField("conversation-item", "Line", new[] {"message"}, null, null, true);
+            var message = UIElementsFactory.LocalizationKeyField("conversation-item", "Line", new[] {"message"}, null, null);
             if (!create) {
-                message.SetValueWithoutNotify(Lines[index].Line);
+                message.SetValueWithoutNotify(Lines[index].LineRef);   
             }
 
             var branchPort = DlogPort.Create("Branch", Orientation.Horizontal, Direction.Output, Port.Capacity.Single, PortType.Branch, true, EdgeConnectorListener);
@@ -108,9 +110,9 @@ namespace DialogueGraph {
 
             message.RegisterCallback<FocusOutEvent>(evt => {
                 var lineIndex = Lines.FindIndex(data => data.PortGuidA == branchPort.viewDataKey);
-                if (message.value != Lines[lineIndex].Line) {
+                if (message.value != Lines[lineIndex].LineRef) {
                     Owner.EditorView.DlogObject.RegisterCompleteObjectUndo("Changed Dialogue Line");
-                    Lines[lineIndex].Line = message.value;
+                    Lines[lineIndex].LineRef = message.value;
                 }
             });
             var removeButton = UIElementsFactory.Button("x", "conversation-item", "Remove line", new[] {"remove-button"}, () => { RemoveLine(Lines.FindIndex(data => data.PortGuidA == branchPort.viewDataKey)); });

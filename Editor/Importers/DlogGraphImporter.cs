@@ -98,7 +98,7 @@ namespace DialogueGraph {
                         runtimeNode.Lines = new List<ConversationLine>();
                         var lines = JsonConvert.DeserializeObject<List<LineDataNpc>>(nodeData.Value<string>("lines"));
                         foreach (var line in lines) {
-                            var runtimeLine = new ConversationLine {Message = line.Line, Next = line.PortGuidA, TriggerPort = line.PortGuidB, CheckPort = line.PortGuidC};
+                            var runtimeLine = new ConversationLine {Message = line.LineRef, Next = line.PortGuidA, TriggerPort = line.PortGuidB, CheckPort = line.PortGuidC};
                             runtimeNode.Lines.Add(runtimeLine);
                         }
                     }

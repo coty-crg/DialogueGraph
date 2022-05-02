@@ -71,7 +71,7 @@ namespace DialogueGraph {
                 Lines.Add(new LineDataSelf {Line = ""});
             }
 
-            var message = UIElementsFactory.TextField("conversation-item", "Line", new[] {"message"}, null, null, true);
+            var message = UIElementsFactory.LocalizationKeyField("conversation-item", "Line", new[] { "message" }, null, null);
             if (!create)
                 message.SetValueWithoutNotify(Lines[index].Line);
 

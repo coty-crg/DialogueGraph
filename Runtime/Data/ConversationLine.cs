@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using LocalizationExtension;
 
 namespace DialogueGraph.Runtime {
     [Serializable]
     public class ConversationLine {
-        public string Message;
-        public string Next;
+        public LocalizationReference Message;
+        public LocalizationReference Next;
         public string TriggerPort;
         public string CheckPort;
         public List<string> Triggers;

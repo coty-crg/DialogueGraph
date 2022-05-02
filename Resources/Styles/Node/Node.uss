@@ -9,6 +9,14 @@
     align-content: center;
 }
 
+.localization-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-left: 8px;
+    align-content: left;
+}
+
 #conversation-container #conversation-item {
     flex: 1 0;
 }

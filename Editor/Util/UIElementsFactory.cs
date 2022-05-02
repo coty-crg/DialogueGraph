@@ -1,5 +1,8 @@
 using System;
 using UnityEngine.UIElements;
+using UnityEngine.UIElements.Experimental;
+using UnityEditor;
+using LocalizationExtension;
 
 namespace DialogueGraph {
     public static class UIElementsFactory {
@@ -39,6 +42,11 @@ namespace DialogueGraph {
             textField.maskChar = passwordMaskChar;
             textField.maxLength = maxLength;
             return textField;
+        }
+
+        public static LocalizationReferenceField LocalizationKeyField(string name, string label, string[] classNames, EventCallback<ChangeEvent<string>> onChanged, EventCallback<FocusOutEvent> onFocusOut, int maxLength = -1)
+        {
+            return new LocalizationReferenceField(name, label, classNames, onChanged, onFocusOut, maxLength); 
         }
     }
 }

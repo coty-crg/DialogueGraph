@@ -1,10 +1,12 @@
 {
     "name": "DialogueGraph.Runtime",
+    "rootNamespace": "",
     "references": [
         "GUID:11a2306c728a4b843a652ec6c2f142bc",
         "GUID:a49fd1d25e23fd14e85d1cbf342bb06f",
         "GUID:5debd524d9fe37b44aa7aede833a8eb7",
-        "GUID:479678a6fc2d434439a70c037334ff05"
+        "GUID:479678a6fc2d434439a70c037334ff05",
+        "GUID:a0227ebaa253bdd4aaf709af5691c395"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
