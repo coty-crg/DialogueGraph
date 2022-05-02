@@ -255,20 +255,9 @@ namespace DialogueGraph {
                 }
 
                 // Ugly magic to change dynamic port guid data
-                if (node.Type == typeof(SelfNode).FullName) {
+                if (node.Type == typeof(DialogNode).FullName) {
                     var data = JObject.Parse(node.NodeData);
-                    var lines = JsonConvert.DeserializeObject<List<LineDataSelf>>(data.Value<string>("lines"));
-
-                    foreach (var currLine in lines) {
-                        currLine.PortGuidA = portGuidMap[currLine.PortGuidA];
-                        currLine.PortGuidB = portGuidMap[currLine.PortGuidB];
-                    }
-
-                    data["lines"] = new JValue(JsonConvert.SerializeObject(lines));
-                    node.NodeData = data.ToString(Formatting.None);
-                } else if (node.Type == typeof(NpcNode).FullName) {
-                    var data = JObject.Parse(node.NodeData);
-                    var lines = JsonConvert.DeserializeObject<List<LineDataNpc>>(data.Value<string>("lines"));
+                    var lines = JsonConvert.DeserializeObject<List<LineDataDialog>>(data.Value<string>("lines"));
 
                     foreach (var currLine in lines) {
                         currLine.PortGuidA = portGuidMap[currLine.PortGuidA];

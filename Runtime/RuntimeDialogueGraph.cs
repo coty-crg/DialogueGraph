@@ -52,11 +52,6 @@ namespace DialogueGraph.Runtime {
             currentNodeGuid = null;
         }
 
-        public bool IsCurrentNpc() {
-            var currentNode = DlogObject.NodeDictionary[currentNodeGuid];
-            return currentNode.Type == NodeType.NPC;
-        }
-
         public bool IsConversationDone() {
             return conversationDone;
         }
@@ -65,7 +60,7 @@ namespace DialogueGraph.Runtime {
             if (currentNodeGuid == null) return null;
 
             var currentNode = DlogObject.NodeDictionary[currentNodeGuid];
-            if (currentNode.Type != NodeType.NPC) return null;
+            if (currentNode.Type != NodeType.DIALOG) return null;
             var currentNodeActorGuid = currentNode.ActorGuid;
             var actor = CurrentData.ActorData[CurrentData.ActorDataIndices[currentNodeActorGuid]];
             return actor;
@@ -78,27 +73,7 @@ namespace DialogueGraph.Runtime {
             return currentNode.Lines;
         }
 
-        public string ProgressNpc() {
-            var lines = GetCurrentLines();
-            for (var i = 0; i < lines.Count - 1; i++) {
-                var line = lines[i];
-                var currentCheck = ExecuteChecks(line, i);
-
-
-                if (currentCheck) {
-                    Progress(line);
-                    ExecuteTriggers(line, i);
-                    return line.Message;
-                }
-            }
-
-            var lastLine = lines[lines.Count - 1];
-            Progress(lastLine);
-            ExecuteTriggers(lastLine, lines.Count-1);
-            return lastLine.Message;
-        }
-
-        public string ProgressSelf(int lineIndex) {
+        public string ProgressDialog(int lineIndex) {
             var lines = GetCurrentLines();
             Progress(lines[lineIndex]);
             ExecuteTriggers(lines[lineIndex], lineIndex);

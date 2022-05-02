@@ -30,7 +30,7 @@ namespace DialogueGraph.Runtime {
 
             // convert each conversation line reference from port to property lists using edge list
             foreach (var node in Nodes) {
-                if (node.Type != NodeType.SELF && node.Type != NodeType.NPC) continue;
+                if (node.Type != NodeType.DIALOG) continue;
                 foreach (var line in node.Lines) {
                     line.Checks = new List<string>();
                     line.CheckTrees = new List<CheckTree>();
@@ -43,8 +43,8 @@ namespace DialogueGraph.Runtime {
                             line.Triggers.Add(propertyNodes[nodeGuid].Temp_PropertyNodeGuid);
                         }
 
-                        // Find checks, only for NPC nodes
-                        if (node.Type == NodeType.NPC && line.CheckPort == edge.ToPort) {
+                        // Find checks, only for Dialog nodes
+                        if (node.Type == NodeType.DIALOG && line.CheckPort == edge.ToPort) {
                             if (NodeDictionary[edge.FromNode].Type == NodeType.PROP) {
                                 var nodeGuid = edge.FromNode;
                                 line.Checks.Add(propertyNodes[nodeGuid].Temp_PropertyNodeGuid);
@@ -63,11 +63,11 @@ namespace DialogueGraph.Runtime {
 
                 foreach (var edge in Edges) {
                     // Find actor node
-                    if (edge.ToNode == node.Guid && node.Type == NodeType.NPC && propertyNodes.ContainsKey(edge.FromNode) && PropertyDictionary[propertyNodes[edge.FromNode].Temp_PropertyNodeGuid].Type == PropertyType.Actor)
+                    if (edge.ToNode == node.Guid && node.Type == NodeType.DIALOG && propertyNodes.ContainsKey(edge.FromNode) && PropertyDictionary[propertyNodes[edge.FromNode].Temp_PropertyNodeGuid].Type == PropertyType.Actor)
                         node.ActorGuid = propertyNodes[edge.FromNode].Temp_PropertyNodeGuid;
 
                     // Find previous node
-                    if (edge.ToNode == node.Guid && (NodeDictionary[edge.FromNode].Type == NodeType.NPC || NodeDictionary[edge.FromNode].Type == NodeType.SELF))
+                    if (edge.ToNode == node.Guid && (NodeDictionary[edge.FromNode].Type == NodeType.DIALOG))
                         node.Previous = edge.FromNode;
                 }
             }
@@ -75,7 +75,7 @@ namespace DialogueGraph.Runtime {
             // Remove property nodes from Nodes and NodeDictionary
             var copyOfNodes = Nodes.ToList();
             copyOfNodes.ForEach(node => {
-                if (node.Type == NodeType.NPC || node.Type == NodeType.SELF) return;
+                if (node.Type == NodeType.DIALOG) return;
                 NodeDictionary.Remove(node.Guid);
                 Nodes.Remove(node);
             });

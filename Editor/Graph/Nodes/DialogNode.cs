@@ -12,21 +12,21 @@ using LocalizationExtension;
 
 namespace DialogueGraph {
 
-    public class LineDataNpc {
+    public class LineDataDialog {
         public LocalizationReference LineRef;
         public string PortGuidA;
         public string PortGuidB;
         public string PortGuidC;
     }
 
-    [Title("NPC")]
-    public class NpcNode : AbstractNode {
-        public List<LineDataNpc> Lines = new List<LineDataNpc>();
+    [Title("Dialog")]
+    public class DialogNode : AbstractNode {
+        public List<LineDataDialog> Lines = new List<LineDataDialog>();
         private VisualElement lineLabel;
 
         public override void InitializeNode(EdgeConnectorListener edgeConnectorListener) {
             base.InitializeNode(edgeConnectorListener);
-            Initialize("NPC", EditorView.DefaultNodePosition);
+            Initialize("Dialog", EditorView.DefaultNodePosition);
 
             var button = new Button(() => AddConversationPort(true)) {text = "Create Dialogue Line"};
             extensionContainer.Add(button);
@@ -40,7 +40,7 @@ namespace DialogueGraph {
 
             lineLabel = new Label {name = "lineTitle", text = "Lines"};
             outputContainer.Add(lineLabel);
-            var titlePortContainer = UIElementsFactory.VisualElement<VisualElement>("npc-title-port-container", null);
+            var titlePortContainer = UIElementsFactory.VisualElement<VisualElement>("dialog-title-port-container", null);
 
             var branchPort = DlogPort.Create("Branch", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, PortType.Branch, true, edgeConnectorListener);
             var actorPort = DlogPort.Create("Actor", Orientation.Horizontal, Direction.Input, Port.Capacity.Single, PortType.Actor, true, edgeConnectorListener);
@@ -56,7 +56,7 @@ namespace DialogueGraph {
             if (string.IsNullOrEmpty(jsonData)) return;
             base.SetNodeData(jsonData);
             var data = JObject.Parse(jsonData);
-            var lines = JsonConvert.DeserializeObject<List<LineDataNpc>>(data.Value<string>("lines"));
+            var lines = JsonConvert.DeserializeObject<List<LineDataDialog>>(data.Value<string>("lines"));
             Lines.Clear();
             Lines.AddRange(lines);
             for (int i = 0; i < Lines.Count; i++) {
@@ -78,7 +78,7 @@ namespace DialogueGraph {
             if (create) {
                 Owner.EditorView.DlogObject.RegisterCompleteObjectUndo("Created Dialogue Line");
                 index = Lines.Count;
-                Lines.Add(new LineDataNpc {LineRef = ""});
+                Lines.Add(new LineDataDialog {LineRef = ""});
             }
 
             // var message = UIElementsFactory.TextField("conversation-item", "Line", new[] {"message"}, null, null, true);

@@ -51,11 +51,8 @@ namespace DialogueGraph {
                     var runtimeNode = new Node();
                     runtimeNode.Guid = node.GUID;
                     switch (node.Type) {
-                        case "DialogueGraph.SelfNode":
-                            runtimeNode.Type = NodeType.SELF;
-                            break;
-                        case "DialogueGraph.NpcNode":
-                            runtimeNode.Type = NodeType.NPC;
+                        case "DialogueGraph.DialogNode":
+                            runtimeNode.Type = NodeType.DIALOG;
                             break;
                         case "DialogueGraph.PropertyNode":
                             runtimeNode.Type = NodeType.PROP;
@@ -87,16 +84,9 @@ namespace DialogueGraph {
                     }
 
                     // Get lines
-                    if (runtimeNode.Type == NodeType.SELF) {
+                    if (runtimeNode.Type == NodeType.DIALOG) {
                         runtimeNode.Lines = new List<ConversationLine>();
-                        var lines = JsonConvert.DeserializeObject<List<LineDataSelf>>(nodeData.Value<string>("lines"));
-                        foreach (var line in lines) {
-                            var runtimeLine = new ConversationLine {Message = line.Line, Next = line.PortGuidA, TriggerPort = line.PortGuidB, CheckPort = Guid.Empty.ToString()};
-                            runtimeNode.Lines.Add(runtimeLine);
-                        }
-                    } else if (runtimeNode.Type == NodeType.NPC) {
-                        runtimeNode.Lines = new List<ConversationLine>();
-                        var lines = JsonConvert.DeserializeObject<List<LineDataNpc>>(nodeData.Value<string>("lines"));
+                        var lines = JsonConvert.DeserializeObject<List<LineDataDialog>>(nodeData.Value<string>("lines"));
                         foreach (var line in lines) {
                             var runtimeLine = new ConversationLine {Message = line.LineRef, Next = line.PortGuidA, TriggerPort = line.PortGuidB, CheckPort = line.PortGuidC};
                             runtimeNode.Lines.Add(runtimeLine);

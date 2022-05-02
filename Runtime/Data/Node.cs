@@ -21,8 +21,7 @@ namespace DialogueGraph.Runtime {
     }
 
     public enum NodeType {
-        NPC,
-        SELF,
+        DIALOG,
         PROP,
 
         BOOLEAN_NOT,
