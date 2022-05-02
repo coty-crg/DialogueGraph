@@ -7,7 +7,7 @@
 >
     <engine:VisualElement class="actor-container">
         <engine:Label name="actorIdentifier" class="actor-title"/>
-        <engine:TextField label="Name" name="actorName" class="actor-name"/>
+        <!--<engine:LocalizationExtension.LocalizationReferenceField label="Name" name="actorName" class="actor-name"/>--> 
         <editor:ObjectField name="customActorData" label="Custom Data"/>
     </engine:VisualElement>
 

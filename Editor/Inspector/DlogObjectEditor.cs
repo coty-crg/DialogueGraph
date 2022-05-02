@@ -96,10 +96,11 @@ namespace DialogueGraph {
 
                 var actorTitle = actorRoot.Q<Label>("actorIdentifier");
                 actorTitle.text = $"{actorProperty.DisplayName}";
-                var actorName = actorRoot.Q<TextField>("actorName");
-                actorName.SetValueWithoutNotify(currentData.ActorData[currentData.ActorDataIndices[actorProperty.Guid]].Name);
-                actorName.RegisterValueChangedCallback(evt => { currentData.ActorData[currentData.ActorDataIndices[actorProperty.Guid]].Name = evt.newValue; });
-                actorName.RegisterCallback<FocusOutEvent>(evt => { serializedObject.ApplyModifiedProperties(); });
+                
+                // var actorName = actorRoot.Q<TextField>("actorName");
+                // actorName.SetValueWithoutNotify(currentData.ActorData[currentData.ActorDataIndices[actorProperty.Guid]].Name);
+                // actorName.RegisterValueChangedCallback(evt => { currentData.ActorData[currentData.ActorDataIndices[actorProperty.Guid]].Name = evt.newValue; });
+                // actorName.RegisterCallback<FocusOutEvent>(evt => { serializedObject.ApplyModifiedProperties(); });
 
                 var customData = actorRoot.Q<ObjectField>("customActorData");
                 customData.objectType = typeof(ScriptableObject);
@@ -215,7 +216,7 @@ namespace DialogueGraph {
             var actorProperties = DlogObject.Properties.Where(property => property.Type == PropertyType.Actor).ToList();
             foreach (var actorProperty in actorProperties) {
                 if (!currentData.ActorDataIndices.ContainsKey(actorProperty.Guid))
-                    currentData.AddActorData(actorProperty.Guid, new Runtime.ActorData("Empty name", null, actorProperty));
+                    currentData.AddActorData(actorProperty.Guid, new Runtime.ActorData(null, actorProperty));
             }
 
             /*keysToRemove.Clear();
