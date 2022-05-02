@@ -1,3 +1,8 @@
+# Fork information
+This is a fork of the DialogGraph repo from: https://github.com/TeodorVecerdi/DialogueGraph
+
+I'm modifying it for a side project I'm working on. This fork depends on a small editor extension (https://github.com/coty-crg/I2LocalizationReference) which allows using i2 localization with this plugin. 
+
 # Dialogue Graph
 <p align="center">
 <!--Issues--><a href="https://github.com/TeodorVecerdi/DialogueGraph/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/TeodorVecerdi/DialogueGraph?color=e62c0b&label=issues"></a>
