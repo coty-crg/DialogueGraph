@@ -62,6 +62,8 @@ namespace DialogueGraph.Runtime {
         }
 
         public ActorData GetCurrentActor() {
+            if (currentNodeGuid == null) return null;
+
             var currentNode = DlogObject.NodeDictionary[currentNodeGuid];
             if (currentNode.Type != NodeType.NPC) return null;
             var currentNodeActorGuid = currentNode.ActorGuid;
@@ -69,7 +71,9 @@ namespace DialogueGraph.Runtime {
             return actor;
         }
 
-        public List<ConversationLine> GetCurrentLines() {
+        public List<ConversationLine> GetCurrentLines()
+        {
+            if (currentNodeGuid == null) return null;
             var currentNode = DlogObject.NodeDictionary[currentNodeGuid];
             return currentNode.Lines;
         }
