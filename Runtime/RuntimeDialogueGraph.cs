@@ -66,6 +66,31 @@ namespace DialogueGraph.Runtime {
             return actor;
         }
 
+        public ActorData GetNextActor(int lineIndex)
+        {
+            if (currentNodeGuid != null)
+            {
+                var currentNode = DlogObject.NodeDictionary[currentNodeGuid];
+                if (currentNode.Type == NodeType.DIALOG)
+                {
+                    var currentLine = currentNode.Lines[lineIndex];
+                    if(currentLine.Next != null)
+                    {
+                        if(DlogObject.NodeDictionary.TryGetValue(currentLine.Next, out Node nextNode))
+                        {
+                            var nextActorGuid = nextNode.ActorGuid;
+                            if (nextActorGuid != null)
+                            {
+                                return CurrentData.ActorData[CurrentData.ActorDataIndices[nextActorGuid]];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public List<ConversationLine> GetCurrentLines()
         {
             if (currentNodeGuid == null) return null;
