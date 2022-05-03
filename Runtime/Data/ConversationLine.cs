@@ -6,7 +6,7 @@ namespace DialogueGraph.Runtime {
     [Serializable]
     public class ConversationLine {
         public LocalizationReference Message;
-        public LocalizationReference Next;
+        public string Next;
         public string TriggerPort;
         public string CheckPort;
         public List<string> Triggers;
